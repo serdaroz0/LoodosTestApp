@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
@@ -35,6 +38,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         mSplashPresenter.created();
         mNetworkChangeReceiver = mSplashPresenter.registerReceiver(this, mSplashPresenter.checkNetworkState());
     }
+
 
     @Override
     public void bindViews() {
