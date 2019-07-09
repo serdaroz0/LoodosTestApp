@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="color_splash_text">#FFFFFF</color>
+    <color name="gradient_start_splash">#D6C62828</color>
+    <color name="gradient_end_splash">#D5AD1457</color>
+    <color name="gradient_start_search">#CCEF6C00</color>
+    <color name="gradient_end_search">#CCD84315</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="filter_desc_card">#AE1D127E</color>
+
 </resources>

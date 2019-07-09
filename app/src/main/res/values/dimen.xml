@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_size_sm_2x">10sp</dimen>
+    <dimen name="font_size_smx">12sp</dimen>
+    <dimen name="font_size_sm">13sp</dimen>
+    <dimen name="font_size">14sp</dimen>
+    <dimen name="font_size_x">16sp</dimen>
+    <dimen name="font_size_2x">18sp</dimen>
+    <dimen name="font_size_3x">24sp</dimen>
+    <dimen name="font_size_4x">28sp</dimen>
+    <dimen name="font_size_5x">30sp</dimen>
+    <dimen name="font_size_6x">34sp</dimen>
+
+
+    <dimen name="margin_sm_2x">3dp</dimen>
+    <dimen name="margin_smx">5dp</dimen>
+    <dimen name="margin_sm">8dp</dimen>
+    <dimen name="margin">10dp</dimen>
+    <dimen name="margin_x">15dp</dimen>
+    <dimen name="margin_2x">20dp</dimen>
+    <dimen name="margin_3x">25dp</dimen>
+
+
+    <dimen name="padding_sm_2x">3dp</dimen>
+    <dimen name="padding_smx">5dp</dimen>
+    <dimen name="padding_sm">8dp</dimen>
+    <dimen name="padding">10dp</dimen>
+    <dimen name="padding_x">15dp</dimen>
+    <dimen name="padding_2x">20dp</dimen>
+    <dimen name="padding_3x">25dp</dimen>
+
+    <dimen name="splash_text_size">55sp</dimen>
+    <dimen name="splash_margin_top">15dp</dimen>
+    <dimen name="splash_icon_size">120dp</dimen>
+    <dimen name="progress_padding">15dp</dimen>
+    <dimen name="main_search_radius">5dp</dimen>
+    <dimen name="no_result_icon_size">120dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
+    <dimen name="card_height">250dp</dimen>
+    <dimen name="card_corner_radius">10dp</dimen>
+
+
+</resources>
