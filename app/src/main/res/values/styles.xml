@@ -1,11 +1,26 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/gradient_start_splash</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+    </style>
+
+    <style name="CardDetailText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:padding">@dimen/padding_smx</item>
+        <item name="android:textSize">@dimen/font_size_x</item>
+        <item name="android:textColor">@color/white</item>
+
+
     </style>
 
 </resources>
