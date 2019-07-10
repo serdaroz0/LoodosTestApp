@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    private String data = "abbcccaaeeeeb bfffffca ccab";
+    private final String data = "abbcccaaeeeeb bfffffca ccab";
     private List<Integer> repeatWeights = new ArrayList<>();
 
     @Test

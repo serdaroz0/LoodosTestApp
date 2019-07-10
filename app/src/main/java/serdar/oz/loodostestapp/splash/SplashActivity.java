@@ -8,9 +8,6 @@ import android.widget.ImageView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
@@ -28,7 +25,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     TypeWriter tvSplashText;
     private SplashPresenter mSplashPresenter;
     private NetworkChangeReceiver mNetworkChangeReceiver;
-    Animator.AnimatorListener animatorListener;
+    private Animator.AnimatorListener animatorListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +93,10 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     public void setSplashTextAndStartAnimation(String string) {
         //Add a character every 150ms
         tvSplashText.setText(string);
-        tvSplashText.setCharacterDelay(300);
+        tvSplashText.setCharacterDelay(200);
         tvSplashText.animateText(string);
         YoYo.with(Techniques.FadeIn)
                 .duration(SPLASH_DELAY)
-                .repeat(0)
                 .withListener(animatorListener)
                 .playOn(ivSplashIcon);
 

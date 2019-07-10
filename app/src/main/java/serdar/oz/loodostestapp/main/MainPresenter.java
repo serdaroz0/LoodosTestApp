@@ -2,6 +2,7 @@ package serdar.oz.loodostestapp.main;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,8 +20,8 @@ import static serdar.oz.loodostestapp.Constants.GRID_SPAN_COUNT;
 
 public class MainPresenter implements MainContract.Presenter {
 
-    private MainContract.View mView;
-    private Context context;
+    private final MainContract.View mView;
+    private final Context context;
     private FilmList filmList;
     private GridLayoutManager gridLayoutManager;
 
@@ -53,7 +54,8 @@ public class MainPresenter implements MainContract.Presenter {
         Call<FilmList> call = searchApi.getFilmList(query, Constants.API_KEY);
         call.enqueue(new Callback<FilmList>() {
             @Override
-            public void onResponse(Call<FilmList> call, Response<FilmList> response) {
+            public void onResponse(@NonNull Call<FilmList> call, @NonNull Response<FilmList> response) {
+                /*For every response we need to clear list first than add*/
                 filmList = null;
                 if (response.isSuccessful())
                     filmList = response.body();
@@ -65,7 +67,7 @@ public class MainPresenter implements MainContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<FilmList> call, Throwable t) {
+            public void onFailure(@NonNull Call<FilmList> call, @NonNull Throwable t) {
                 mView.showErrorMessage(t.getMessage());
                 mView.noResultView();
             }

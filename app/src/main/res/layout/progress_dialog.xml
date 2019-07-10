@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/ivLoading"
+        android:contentDescription="@string/loading"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:background="@drawable/loading_animation"

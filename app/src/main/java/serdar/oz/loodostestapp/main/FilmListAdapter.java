@@ -20,8 +20,8 @@ import serdar.oz.loodostestapp.util.Util;
 
 
 public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHolder> {
-    private Context context;
-    private List<FilmList.Type> filmList;
+    private final Context context;
+    private final List<FilmList.Type> filmList;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView ivPoster;

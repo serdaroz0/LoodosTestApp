@@ -12,6 +12,7 @@
         android:id="@+id/ivSplashIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/splash_text"
         android:src="@drawable/ic_splash_icon" />
 
 

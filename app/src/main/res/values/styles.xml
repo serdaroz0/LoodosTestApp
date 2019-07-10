@@ -6,7 +6,6 @@
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/gradient_start_splash</item>
-        <item name="android:windowContentTransitions">true</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
     </style>

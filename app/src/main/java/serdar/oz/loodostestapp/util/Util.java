@@ -33,13 +33,11 @@ public class Util {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(true);
         progressDialog.setCanceledOnTouchOutside(false);
-        //progressDialog.setContentView(R.layout.progress_dialog);
         return progressDialog;
     }
 
     public static RequestOptions glideOptions(Context context) {
         return new RequestOptions()
-                //.centerCrop()
                 .placeholder(Util.createCircularProgressDrawable(context))
                 .error(R.drawable.ic_poster_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

@@ -9,12 +9,12 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 import serdar.oz.loodostestapp.Constants;
 import serdar.oz.loodostestapp.R;
@@ -27,8 +27,8 @@ import static serdar.oz.loodostestapp.Constants.CACHE_EXPIRATION;
 import static serdar.oz.loodostestapp.Constants.SPLASH_TEXT;
 
 public class SplashPresenter implements SplashContract.Presenter {
-    private SplashContract.View mView;
-    private Context context;
+    private final SplashContract.View mView;
+    private final Context context;
 
     SplashPresenter(Context context, SplashContract.View mView) {
         this.mView = mView;
@@ -107,8 +107,9 @@ public class SplashPresenter implements SplashContract.Presenter {
 
     @Override
     public void startMainActivity() {
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, MainActivity.class));
+       /*Splash Animation*/
+        Animatoo.animateZoom(context);
     }
 
 

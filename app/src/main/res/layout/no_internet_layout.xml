@@ -12,6 +12,7 @@
         android:id="@+id/ivSplashIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/no_internet_connection_title"
         android:src="@drawable/ic_no_wifi" />
 
     <TextView
