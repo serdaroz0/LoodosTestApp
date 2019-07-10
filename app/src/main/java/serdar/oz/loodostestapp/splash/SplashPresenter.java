@@ -1,5 +1,6 @@
 package serdar.oz.loodostestapp.splash;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -108,8 +109,9 @@ public class SplashPresenter implements SplashContract.Presenter {
     @Override
     public void startMainActivity() {
         context.startActivity(new Intent(context, MainActivity.class));
-       /*Splash Animation*/
+        /*Splash Animation*/
         Animatoo.animateZoom(context);
+        ((Activity) context).finish();
     }
 
 
