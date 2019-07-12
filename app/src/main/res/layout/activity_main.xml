@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/main_search_background"
         app:iconifiedByDefault="false"
-        app:queryHint="@string/search_films" />
+        app:queryHint="@string/search_movies" />
 
     <LinearLayout
         android:id="@+id/llNoResult"

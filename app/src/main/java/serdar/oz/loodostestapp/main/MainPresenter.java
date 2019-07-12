@@ -8,7 +8,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import serdar.oz.loodostestapp.Constants;
-import serdar.oz.loodostestapp.model.FilmList;
+import serdar.oz.loodostestapp.model.MovieList;
 import serdar.oz.loodostestapp.services.RetrofitClient;
 import serdar.oz.loodostestapp.services.SearchApi;
 import serdar.oz.loodostestapp.util.Util;
@@ -18,7 +18,8 @@ public class MainPresenter implements MainContract.Presenter {
 
     private final MainContract.View mView;
     private final Context context;
-    private FilmList filmList;
+    private MovieList movieList;
+
 
 
     MainPresenter(Context context, MainContract.View mView) {
@@ -34,26 +35,27 @@ public class MainPresenter implements MainContract.Presenter {
 
 
     @Override
-    public void getFilmListWithQuery(String query) {
+
+    public void getMovieListWithQuery(String query) {
         Util.showProgress(context);
         SearchApi searchApi = RetrofitClient.getApiClient().create(SearchApi.class);
-        Call<FilmList> call = searchApi.getFilmList(query, Constants.API_KEY);
-        call.enqueue(new Callback<FilmList>() {
+        Call<MovieList> call = searchApi.getMovieList(query, Constants.API_KEY);
+        call.enqueue(new Callback<MovieList>() {
             @Override
-            public void onResponse(@NonNull Call<FilmList> call, @NonNull Response<FilmList> response) {
+            public void onResponse(@NonNull Call<MovieList> call, @NonNull Response<MovieList> response) {
                 /*For every response we need to clear list first than add*/
-                filmList = null;
+                movieList = null;
                 if (response.isSuccessful())
-                    filmList = response.body();
-                if (filmList != null && filmList.getSearch() != null && filmList.getSearch().size() > 0) {
-                    mView.setAdapter(filmList);
+                    movieList = response.body();
+                if (movieList != null && movieList.getSearch() != null && movieList.getSearch().size() > 0) {
+                    mView.notifyMovieData(movieList);
                     mView.showResultView();
                 } else
                     mView.noResultView();
             }
 
             @Override
-            public void onFailure(@NonNull Call<FilmList> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieList> call, @NonNull Throwable t) {
                 mView.showErrorMessage(t.getMessage());
                 mView.noResultView();
             }
