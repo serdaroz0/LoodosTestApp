@@ -1,9 +1,8 @@
 package serdar.oz.loodostestapp.main;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import serdar.oz.loodostestapp.base.BasePresenter;
 import serdar.oz.loodostestapp.base.BaseView;
+import serdar.oz.loodostestapp.model.FilmList;
 
 
 public interface MainContract {
@@ -17,13 +16,14 @@ public interface MainContract {
         void initListeners();
 
         void showResultView();
+
+        void setAdapter(FilmList filmList);
     }
 
     interface Presenter extends BasePresenter {
 
-        void setAdapter(RecyclerView recyclerView);
 
-        void getFilmListWithQuery(String query, RecyclerView recyclerView);
+        void getFilmListWithQuery(String query);
 
 
     }
