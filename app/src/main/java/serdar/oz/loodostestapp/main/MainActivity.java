@@ -8,14 +8,18 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.base.BaseActivity;
+import serdar.oz.loodostestapp.model.FilmList;
 import serdar.oz.loodostestapp.util.Util;
 
+import static serdar.oz.loodostestapp.Constants.GRID_SPAN_COUNT;
 import static serdar.oz.loodostestapp.Constants.QUERY_MIN_LIMIT;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
@@ -27,6 +31,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.llNoResult)
     LinearLayout llNoResult;
     private MainPresenter mainPresenter;
+    private GridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +67,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     public void initListeners() {
         svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String query) {
                 Log.e(TAG, "onClick: " + "clicked");
                 /*If the limit is less than 2 character, an error message is return because a lot of results are returned than api*/
-                if (s.length() > QUERY_MIN_LIMIT)
-                    mainPresenter.getFilmListWithQuery(s, rvSearchItems);
+                if (query.length() > QUERY_MIN_LIMIT)
+                    mainPresenter.getFilmListWithQuery(query);
                 else
                     noResultView();
                 return false;
@@ -84,6 +89,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     public void showResultView() {
         llNoResult.setVisibility(View.GONE);
         rvSearchItems.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void setAdapter(FilmList filmList) {
+        if (gridLayoutManager == null) {
+            gridLayoutManager = new GridLayoutManager(this, GRID_SPAN_COUNT, RecyclerView.VERTICAL, false);
+            rvSearchItems.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+            rvSearchItems.setItemAnimator(new DefaultItemAnimator());
+        }
+
+        FilmListAdapter filmListAdapter = new FilmListAdapter(this, filmList.getSearch());
+        rvSearchItems.setAdapter(filmListAdapter); // set the Adapter to RecyclerView
     }
 
 }
