@@ -2,7 +2,7 @@ package serdar.oz.loodostestapp.main;
 
 import serdar.oz.loodostestapp.base.BasePresenter;
 import serdar.oz.loodostestapp.base.BaseView;
-import serdar.oz.loodostestapp.model.FilmList;
+import serdar.oz.loodostestapp.model.MovieList;
 
 
 public interface MainContract {
@@ -17,13 +17,13 @@ public interface MainContract {
 
         void showResultView();
 
-        void setAdapter(FilmList filmList);
+        void notifyMovieData(MovieList movieList);
     }
 
     interface Presenter extends BasePresenter {
 
 
-        void getFilmListWithQuery(String query);
+        void getMovieListWithQuery(String query);
 
 
     }

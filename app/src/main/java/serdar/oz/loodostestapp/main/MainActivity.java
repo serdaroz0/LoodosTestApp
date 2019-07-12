@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.base.BaseActivity;
-import serdar.oz.loodostestapp.model.FilmList;
+import serdar.oz.loodostestapp.model.MovieList;
 import serdar.oz.loodostestapp.util.Util;
 
 import static serdar.oz.loodostestapp.Constants.GRID_SPAN_COUNT;
@@ -31,7 +34,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.llNoResult)
     LinearLayout llNoResult;
     private MainPresenter mainPresenter;
-    private GridLayoutManager gridLayoutManager;
+    private MovieListAdapter movieListAdapter;
+    private List<MovieList.Type> movieList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         /*Service response is coming very fast, I open showProgress() method so we can see the progress design.*/
         Util.showProgress(MainActivity.this);
         new Handler().postDelayed(Util::hideProgress, 1200);
-
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_SPAN_COUNT, RecyclerView.VERTICAL, false);
+        rvSearchItems.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+        rvSearchItems.setItemAnimator(new DefaultItemAnimator());
+        movieListAdapter = new MovieListAdapter(this, movieList);
+        rvSearchItems.setAdapter(movieListAdapter); // set the Adapter to RecyclerView
     }
 
     @Override
@@ -71,7 +79,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 Log.e(TAG, "onClick: " + "clicked");
                 /*If the limit is less than 2 character, an error message is return because a lot of results are returned than api*/
                 if (query.length() > QUERY_MIN_LIMIT)
-                    mainPresenter.getFilmListWithQuery(query);
+                    mainPresenter.getMovieListWithQuery(query);
                 else
                     noResultView();
                 return false;
@@ -93,15 +101,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
 
     @Override
-    public void setAdapter(FilmList filmList) {
-        if (gridLayoutManager == null) {
-            gridLayoutManager = new GridLayoutManager(this, GRID_SPAN_COUNT, RecyclerView.VERTICAL, false);
-            rvSearchItems.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
-            rvSearchItems.setItemAnimator(new DefaultItemAnimator());
-        }
-
-        FilmListAdapter filmListAdapter = new FilmListAdapter(this, filmList.getSearch());
-        rvSearchItems.setAdapter(filmListAdapter); // set the Adapter to RecyclerView
+    public void notifyMovieData(MovieList movieModel) {
+        movieList.clear();
+        movieList.addAll(movieModel.getSearch());
+        movieListAdapter.notifyDataSetChanged();
     }
 
 }

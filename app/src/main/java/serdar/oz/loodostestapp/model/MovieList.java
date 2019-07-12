@@ -3,7 +3,7 @@ package serdar.oz.loodostestapp.model;
 
 import java.util.List;
 
-public class FilmList {
+public class MovieList {
 
 
     /**
