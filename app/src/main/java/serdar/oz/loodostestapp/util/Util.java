@@ -19,7 +19,6 @@ import serdar.oz.loodostestapp.R;
 
 public class Util {
 
-    public static boolean isNetworkConnect = false;
     private static ProgressDialog progressDialog;
 
 

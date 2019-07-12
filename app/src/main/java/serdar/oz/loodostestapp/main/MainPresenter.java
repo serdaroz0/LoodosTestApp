@@ -21,6 +21,7 @@ public class MainPresenter implements MainContract.Presenter {
     private MovieList movieList;
 
 
+
     MainPresenter(Context context, MainContract.View mView) {
         this.mView = mView;
         this.context = context;
@@ -34,6 +35,7 @@ public class MainPresenter implements MainContract.Presenter {
 
 
     @Override
+
     public void getMovieListWithQuery(String query) {
         Util.showProgress(context);
         SearchApi searchApi = RetrofitClient.getApiClient().create(SearchApi.class);

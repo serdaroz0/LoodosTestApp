@@ -90,6 +90,16 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     }
 
     @Override
+    public void onActivityPause() {
+        mSplashPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
+    }
+
+    @Override
+    public void onActivityDestroy() {
+        mSplashPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
+    }
+
+    @Override
     public void setSplashTextAndStartAnimation(String string) {
         //Add a character every 150ms
         tvSplashText.setText(string);
@@ -106,12 +116,12 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @Override
     protected void onPause() {
         super.onPause();
-        mSplashPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
+        onActivityPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSplashPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
+        onActivityDestroy();
     }
 }

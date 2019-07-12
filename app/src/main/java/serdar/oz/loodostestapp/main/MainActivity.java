@@ -19,7 +19,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.base.BaseActivity;
+
 import serdar.oz.loodostestapp.model.MovieList;
+
+
 import serdar.oz.loodostestapp.util.Util;
 
 import static serdar.oz.loodostestapp.Constants.GRID_SPAN_COUNT;
@@ -36,6 +39,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private MainPresenter mainPresenter;
     private MovieListAdapter movieListAdapter;
     private List<MovieList.Type> movieList = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                 Log.e(TAG, "onClick: " + "clicked");
                 /*If the limit is less than 2 character, an error message is return because a lot of results are returned than api*/
                 if (query.length() > QUERY_MIN_LIMIT)
+
                     mainPresenter.getMovieListWithQuery(query);
+
                 else
                     noResultView();
                 return false;
@@ -105,6 +112,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         movieList.clear();
         movieList.addAll(movieModel.getSearch());
         movieListAdapter.notifyDataSetChanged();
+
     }
 
 }
