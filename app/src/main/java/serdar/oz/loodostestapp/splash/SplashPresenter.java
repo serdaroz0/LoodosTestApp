@@ -69,13 +69,10 @@ public class SplashPresenter implements SplashContract.Presenter {
                 try {
                     if (intent.getAction() != null) {
                         Log.e(TAG, "onReceive: " + intent.getAction());
-                        if (intent.getAction().equals(Constants.NO_NETWORK)) {
-                            Util.isNetworkConnect = false;
+                        if (intent.getAction().equals(Constants.NO_NETWORK))
                             mView.internetErrorLayout();
-                        } else {
+                        else
                             fetchFirebase();
-                            Util.isNetworkConnect = true;
-                        }
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();

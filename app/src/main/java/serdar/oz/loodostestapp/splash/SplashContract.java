@@ -22,6 +22,10 @@ public interface SplashContract {
 
         void initListeners();
 
+        void onActivityPause();
+
+        void onActivityDestroy();
+
         void setSplashTextAndStartAnimation(String text);
 
 

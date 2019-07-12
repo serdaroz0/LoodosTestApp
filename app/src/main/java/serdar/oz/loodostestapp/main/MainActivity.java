@@ -101,6 +101,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         }
 
         FilmListAdapter filmListAdapter = new FilmListAdapter(this, filmList.getSearch());
+        rvSearchItems.setAdapter(null);
         rvSearchItems.setAdapter(filmListAdapter); // set the Adapter to RecyclerView
     }
 
