@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.base;
+package serdar.oz.loodostestapp.ui.base;
 
 public interface BaseView {
     void bindViews();

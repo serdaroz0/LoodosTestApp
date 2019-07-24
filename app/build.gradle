@@ -16,9 +16,15 @@ android {
 
     }
     buildTypes {
-        release {
+        debug {
             versionNameSuffix ".${gitCommitCount}"
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            versionNameSuffix ".${gitCommitCount}"
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

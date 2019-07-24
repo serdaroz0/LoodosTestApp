@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.main;
+package serdar.oz.loodostestapp.ui.main;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,16 +17,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.model.MovieList;
-import serdar.oz.loodostestapp.util.Util;
+import serdar.oz.loodostestapp.util.GlideUtil;
 
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
     private final Context context;
     private final List<MovieList.Type> movieList;
-    private IMovieAdapter iMovieAdapter;
+    private final IMovieAdapter iMovieAdapter;
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivPoster)
@@ -44,10 +44,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             super(view);
             ButterKnife.bind(this, view);
         }
+
+
     }
 
-    MovieListAdapter(Context context, List<MovieList.Type> movieList) {
+    MovieListAdapter(Context context, List<MovieList.Type> movieList, IMovieAdapter iMovieAdapter) {
         this.movieList = movieList;
+        this.iMovieAdapter = iMovieAdapter;
         this.context = context;
     }
 
@@ -62,16 +65,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         MovieList.Type movie = movieList.get(position);
         try {
             if (movie.getPoster() != null && !movie.getPoster().isEmpty())
-                Glide.with(context).applyDefaultRequestOptions(Util.glideOptions(context)).load(movie.getPoster()).into(holder.ivPoster);
+                Glide.with(context).applyDefaultRequestOptions(GlideUtil.glideOptions(context)).load(movie.getPoster()).into(holder.ivPoster);
             holder.tvTitle.setText(movie.getTitle());
             holder.tvType.setText(movie.getYear());
             holder.tvYear.setText(movie.getType().toUpperCase());
-            iMovieAdapter = new IMovieAdapter() {
-                @Override
-                public void onAdapterMovieClicked() {
-
-                }
-            };
+            holder.cvMovie.setOnClickListener(view -> iMovieAdapter.onMovieClicked(movieList.get(position).getİmdbID(), holder.ivPoster));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -82,8 +80,4 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return (movieList == null) ? 0 : movieList.size();
     }
 
-    @OnClick(R.id.cvMovie)
-    public void onMovieClick() {
-        iMovieAdapter.onAdapterMovieClicked();
-    }
 }

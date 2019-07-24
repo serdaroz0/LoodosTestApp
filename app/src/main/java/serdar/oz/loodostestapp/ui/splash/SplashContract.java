@@ -1,10 +1,10 @@
-package serdar.oz.loodostestapp.splash;
+package serdar.oz.loodostestapp.ui.splash;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 
-import serdar.oz.loodostestapp.base.BasePresenter;
-import serdar.oz.loodostestapp.base.BaseView;
+import serdar.oz.loodostestapp.ui.base.BasePresenter;
+import serdar.oz.loodostestapp.ui.base.BaseView;
 import serdar.oz.loodostestapp.control.NetworkChangeReceiver;
 
 

@@ -1,8 +1,7 @@
-package serdar.oz.loodostestapp.main;
+package serdar.oz.loodostestapp.ui.main;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -18,16 +17,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
-import serdar.oz.loodostestapp.base.BaseActivity;
-
-
+import serdar.oz.loodostestapp.ui.base.BaseActivity;
+import serdar.oz.loodostestapp.constants.GlobalConstants;
 import serdar.oz.loodostestapp.model.MovieList;
-import serdar.oz.loodostestapp.util.Util;
+import serdar.oz.loodostestapp.util.ProgressUtil;
 
-import static serdar.oz.loodostestapp.Constants.GRID_SPAN_COUNT;
-import static serdar.oz.loodostestapp.Constants.QUERY_MIN_LIMIT;
-
-public class MainActivity extends BaseActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View, IMovieAdapter {
     private static final String TAG = "MainActivity";
     @BindView(R.id.svSearch)
     SearchView svSearch;
@@ -40,21 +35,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private List<MovieList.Type> movieList = new ArrayList<>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         mainPresenter = new MainPresenter(this, this);
         mainPresenter.created();
         /*Service response is coming very fast, I open showProgress() method so we can see the progress design.*/
-        Util.showProgress(MainActivity.this);
-        new Handler().postDelayed(Util::hideProgress, 1200);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_SPAN_COUNT, RecyclerView.VERTICAL, false);
+        ProgressUtil.showProgress(MainActivity.this);
+        new Handler().postDelayed(ProgressUtil::hideProgress, 1200);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GlobalConstants.GRID_SPAN_COUNT, RecyclerView.VERTICAL, false);
         rvSearchItems.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
         rvSearchItems.setItemAnimator(new DefaultItemAnimator());
-        movieListAdapter = new MovieListAdapter(this, movieList);
+        movieListAdapter = new MovieListAdapter(this, movieList, this);
         rvSearchItems.setAdapter(movieListAdapter); // set the Adapter to RecyclerView
     }
 
@@ -80,12 +73,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.e(TAG, "onClick: " + "clicked");
                 /*If the limit is less than 2 character, an error message is return because a lot of results are returned than api*/
-                if (query.length() > QUERY_MIN_LIMIT)
-
+                if (query.length() > GlobalConstants.QUERY_MIN_LIMIT)
                     mainPresenter.getMovieListWithQuery(query);
-
                 else
                     noResultView();
                 return false;
@@ -111,7 +101,16 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         movieList.clear();
         movieList.addAll(movieModel.getSearch());
         movieListAdapter.notifyDataSetChanged();
-
     }
 
+    @Override
+    public void onMovieItemClicked(String imdbId, View view) {
+        mainPresenter.startDetailActivity(imdbId, view);
+    }
+
+
+    @Override
+    public void onMovieClicked(String imdbId, View view) {
+        onMovieItemClicked(imdbId, view);
+    }
 }

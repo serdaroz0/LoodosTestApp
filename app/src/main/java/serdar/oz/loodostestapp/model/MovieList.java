@@ -3,6 +3,8 @@ package serdar.oz.loodostestapp.model;
 
 import java.util.List;
 
+import serdar.oz.loodostestapp.util.StringUtils;
+
 public class MovieList {
 
     /**
@@ -16,7 +18,7 @@ public class MovieList {
     private List<Type> Search;
 
     public String getTotalResults() {
-        return totalResults;
+        return StringUtils.checkNullOrNot(totalResults);
     }
 
     public void setTotalResults(String totalResults) {
@@ -24,7 +26,7 @@ public class MovieList {
     }
 
     public String getResponse() {
-        return Response;
+        return StringUtils.checkNullOrNot(Response);
     }
 
     public void setResponse(String Response) {
@@ -56,7 +58,7 @@ public class MovieList {
         private String Poster;
 
         public String getTitle() {
-            return Title;
+            return StringUtils.checkNullOrNot(Title);
         }
 
         public void setTitle(String Title) {
@@ -64,7 +66,7 @@ public class MovieList {
         }
 
         public String getYear() {
-            return Year;
+            return StringUtils.checkNullOrNot(Year);
         }
 
         public void setYear(String Year) {
@@ -72,7 +74,7 @@ public class MovieList {
         }
 
         public String getİmdbID() {
-            return imdbID;
+            return StringUtils.checkNullOrNot(imdbID);
         }
 
         public void setİmdbID(String imdbID) {
@@ -80,7 +82,7 @@ public class MovieList {
         }
 
         public String getType() {
-            return Type;
+            return StringUtils.checkNullOrNot(Type);
         }
 
         public void setType(String Type) {
@@ -88,7 +90,7 @@ public class MovieList {
         }
 
         public String getPoster() {
-            return Poster;
+            return StringUtils.checkNullOrNot(Poster);
         }
 
         public void setPoster(String Poster) {

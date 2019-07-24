@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.splash;
+package serdar.oz.loodostestapp.ui.splash;
 
 import android.animation.Animator;
 import android.os.Bundle;
@@ -11,12 +11,12 @@ import com.daimajia.androidanimations.library.YoYo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
-import serdar.oz.loodostestapp.base.BaseActivity;
+import serdar.oz.loodostestapp.ui.base.BaseActivity;
 import serdar.oz.loodostestapp.control.NetworkChangeReceiver;
 import serdar.oz.loodostestapp.control.TypeWriter;
 
 import static android.content.ContentValues.TAG;
-import static serdar.oz.loodostestapp.Constants.SPLASH_DELAY;
+import static serdar.oz.loodostestapp.constants.GlobalConstants.SPLASH_DELAY;
 
 public class SplashActivity extends BaseActivity implements SplashContract.View {
     @BindView(R.id.ivSplashIcon)
