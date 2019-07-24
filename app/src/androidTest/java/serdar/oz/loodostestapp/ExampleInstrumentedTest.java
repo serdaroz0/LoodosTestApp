@@ -47,7 +47,6 @@ public class ExampleInstrumentedTest {
             }
             /*Burada bulunduğumuz indexi güncelledik*/
             currentIndex = currentIndex + repeatWeights.get(i);
-
         }
         Log.e("replace", "replaceChars: " + result);
         return result;
