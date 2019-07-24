@@ -6,7 +6,6 @@ import retrofit2.http.Query;
 import serdar.oz.loodostestapp.model.FilmList;
 
 public interface SearchApi {
-
     @GET("?")
     Call<FilmList> getFilmList(@Query("s") String name, @Query("apikey") String apikey);
 }

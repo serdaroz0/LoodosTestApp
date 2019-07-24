@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvMovie"
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_height"
     android:layout_margin="@dimen/margin"
@@ -13,9 +14,9 @@
 
         <ImageView
             android:id="@+id/ivPoster"
-            android:contentDescription="@string/film_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/film_poster"
             android:scaleType="fitXY" />
 
         <LinearLayout

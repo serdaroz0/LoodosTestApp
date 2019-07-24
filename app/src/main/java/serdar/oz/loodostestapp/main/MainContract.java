@@ -22,8 +22,9 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter {
 
-
         void getFilmListWithQuery(String query);
+
+        void onMovieClicked();
 
 
     }

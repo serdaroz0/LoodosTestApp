@@ -8,37 +8,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.model.FilmList;
 import serdar.oz.loodostestapp.util.Util;
 
 
-public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHolder> {
+public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
     private final Context context;
     private final List<FilmList.Type> filmList;
+    private IMovieAdapter iMovieAdapter;
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final ImageView ivPoster;
-        final TextView tvTitle;
-        final TextView tvType;
-        final TextView tvYear;
+        @BindView(R.id.ivPoster)
+        ImageView ivPoster;
+        @BindView(R.id.tvTitle)
+        TextView tvTitle;
+        @BindView(R.id.tvType)
+        TextView tvType;
+        @BindView(R.id.tvYear)
+        TextView tvYear;
+        @BindView(R.id.cvMovie)
+        CardView cvMovie;
 
-        private ViewHolder(View v) {
-            super(v);
-            this.ivPoster = v.findViewById(R.id.ivPoster);
-            this.tvTitle = v.findViewById(R.id.tvTitle);
-            this.tvType = v.findViewById(R.id.tvType);
-            this.tvYear = v.findViewById(R.id.tvYear);
+        ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
     }
 
-    FilmListAdapter(Context context, List<FilmList.Type> filmList) {
+    MovieListAdapter(Context context, List<FilmList.Type> filmList) {
         this.filmList = filmList;
         this.context = context;
     }
@@ -58,6 +67,12 @@ public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHo
             holder.tvTitle.setText(film.getTitle());
             holder.tvType.setText(film.getYear());
             holder.tvYear.setText(film.getType().toUpperCase());
+            iMovieAdapter = new IMovieAdapter() {
+                @Override
+                public void onMovieClicked() {
+
+                }
+            };
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -68,4 +83,8 @@ public class FilmListAdapter extends RecyclerView.Adapter<FilmListAdapter.ViewHo
         return (filmList == null) ? 0 : filmList.size();
     }
 
+    @OnClick(R.id.cvMovie)
+    private void onMovieClick() {
+        iMovieAdapter.onMovieClicked();
+    }
 }

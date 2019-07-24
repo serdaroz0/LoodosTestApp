@@ -100,9 +100,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             rvSearchItems.setItemAnimator(new DefaultItemAnimator());
         }
 
-        FilmListAdapter filmListAdapter = new FilmListAdapter(this, filmList.getSearch());
+        MovieListAdapter movieListAdapter = new MovieListAdapter(this, filmList.getSearch());
         rvSearchItems.setAdapter(null);
-        rvSearchItems.setAdapter(filmListAdapter); // set the Adapter to RecyclerView
+        rvSearchItems.setAdapter(movieListAdapter); // set the Adapter to RecyclerView
     }
 
 }
