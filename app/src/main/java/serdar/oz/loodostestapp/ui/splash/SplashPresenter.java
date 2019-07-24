@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.detail;
+package serdar.oz.loodostestapp.ui.splash;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -17,20 +17,21 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.HashMap;
 import java.util.Map;
 
-import serdar.oz.loodostestapp.Constants;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.control.NetworkChangeReceiver;
-import serdar.oz.loodostestapp.main.MainActivity;
+import serdar.oz.loodostestapp.ui.main.MainActivity;
 
 import static android.content.ContentValues.TAG;
-import static serdar.oz.loodostestapp.Constants.CACHE_EXPIRATION;
-import static serdar.oz.loodostestapp.Constants.SPLASH_TEXT;
+import static serdar.oz.loodostestapp.constants.FirebaseConstants.CACHE_EXPIRATION;
+import static serdar.oz.loodostestapp.constants.FirebaseConstants.SPLASH_TEXT;
+import static serdar.oz.loodostestapp.constants.GlobalConstants.NETWORK_CONNECTED;
+import static serdar.oz.loodostestapp.constants.GlobalConstants.NO_NETWORK;
 
-public class DetailPresenter implements DetailContract.Presenter {
-    private final DetailContract.View mView;
+public class SplashPresenter implements SplashContract.Presenter {
+    private final SplashContract.View mView;
     private final Context context;
 
-    DetailPresenter(Context context, DetailContract.View mView) {
+    SplashPresenter(Context context, SplashContract.View mView) {
         this.mView = mView;
         this.context = context;
     }
@@ -42,18 +43,18 @@ public class DetailPresenter implements DetailContract.Presenter {
         Map<String, Object> map = new HashMap<>();
         map.put(SPLASH_TEXT, context.getString(R.string.splash_text));
         mFirebaseRemoteConfig.setConfigSettingsAsync(new FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(CACHE_EXPIRATION).build());
-        /*  This will initiate fetching of parameters. We have set the expiry time as 0
-             which will ensure we get fresh parameters every time */
         mFirebaseRemoteConfig.setDefaults(R.xml.default_splash);
         mFirebaseRemoteConfig.setDefaults(map);
         String splashText = mFirebaseRemoteConfig.getString(SPLASH_TEXT);
         /*Set Splash text here*/
         mView.setSplashTextAndStartAnimation(splashText);
+         /*  This will initiate fetching of parameters. We have set the expiry time as 0
+             which will ensure we get fresh parameters every time */
         mFirebaseRemoteConfig.fetch().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 mView.fetchSuccessMessage();
-                /* After config data is successfully fetched, it must be activated before newly fetched
-                values are returned.*/
+                // After config data is successfully fetched, it must be activated before newly fetched
+                // values are returned.
                 mFirebaseRemoteConfig.activate();
             } else
                 mView.fetchFailedMessage();
@@ -68,7 +69,7 @@ public class DetailPresenter implements DetailContract.Presenter {
                 try {
                     if (intent.getAction() != null) {
                         Log.e(TAG, "onReceive: " + intent.getAction());
-                        if (intent.getAction().equals(Constants.NO_NETWORK))
+                        if (intent.getAction().equals(NO_NETWORK))
                             mView.internetErrorLayout();
                         else
                             fetchFirebase();
@@ -85,8 +86,8 @@ public class DetailPresenter implements DetailContract.Presenter {
         NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver();
         try {
             context.registerReceiver(networkChangeReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-            LocalBroadcastManager.getInstance(context).registerReceiver(mReceiver, new IntentFilter(Constants.NETWORK_CONNECTED));
-            LocalBroadcastManager.getInstance(context).registerReceiver(mReceiver, new IntentFilter(Constants.NO_NETWORK));
+            LocalBroadcastManager.getInstance(context).registerReceiver(mReceiver, new IntentFilter(NETWORK_CONNECTED));
+            LocalBroadcastManager.getInstance(context).registerReceiver(mReceiver, new IntentFilter(NO_NETWORK));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

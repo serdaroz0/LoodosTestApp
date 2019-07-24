@@ -9,7 +9,9 @@ import android.net.NetworkInfo;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import serdar.oz.loodostestapp.Constants;
+import static serdar.oz.loodostestapp.constants.GlobalConstants.NETWORK_CONNECTED;
+import static serdar.oz.loodostestapp.constants.GlobalConstants.NO_NETWORK;
+
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
@@ -17,9 +19,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             if (isOnline(context))
-                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Constants.NETWORK_CONNECTED));
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(NETWORK_CONNECTED));
             else
-                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Constants.NO_NETWORK));
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(NO_NETWORK));
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

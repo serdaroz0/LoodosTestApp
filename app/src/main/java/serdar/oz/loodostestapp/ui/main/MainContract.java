@@ -1,9 +1,8 @@
-package serdar.oz.loodostestapp.main;
+package serdar.oz.loodostestapp.ui.main;
 
-import serdar.oz.loodostestapp.base.BasePresenter;
-import serdar.oz.loodostestapp.base.BaseView;
 import serdar.oz.loodostestapp.model.MovieList;
-
+import serdar.oz.loodostestapp.ui.base.BasePresenter;
+import serdar.oz.loodostestapp.ui.base.BaseView;
 
 
 public interface MainContract {
@@ -20,13 +19,16 @@ public interface MainContract {
 
         void notifyMovieData(MovieList movieList);
 
+        void onMovieItemClicked(String imdbId, android.view.View view);
+
     }
 
     interface Presenter extends BasePresenter {
 
-        void onMovieClicked();
-
         void getMovieListWithQuery(String query);
+
+        void startDetailActivity(String imdbId, android.view.View view);
+
 
     }
 }
