@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.base.BaseActivity;
 
 
-
-
+import serdar.oz.loodostestapp.model.MovieList;
 import serdar.oz.loodostestapp.util.Util;
 
 import static serdar.oz.loodostestapp.Constants.GRID_SPAN_COUNT;

@@ -21,7 +21,6 @@ public class MainPresenter implements MainContract.Presenter {
     private MovieList movieList;
 
 
-
     MainPresenter(Context context, MainContract.View mView) {
         this.mView = mView;
         this.context = context;
@@ -33,6 +32,11 @@ public class MainPresenter implements MainContract.Presenter {
         mView.initListeners();
     }
 
+
+    @Override
+    public void onMovieClicked() {
+
+    }
 
     @Override
 

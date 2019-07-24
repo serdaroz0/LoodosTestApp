@@ -27,6 +27,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     private final Context context;
     private final List<MovieList.Type> movieList;
     private IMovieAdapter iMovieAdapter;
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivPoster)
         ImageView ivPoster;
@@ -67,7 +68,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             holder.tvYear.setText(movie.getType().toUpperCase());
             iMovieAdapter = new IMovieAdapter() {
                 @Override
-                public void onMovieClicked() {
+                public void onAdapterMovieClicked() {
 
                 }
             };
@@ -82,7 +83,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     @OnClick(R.id.cvMovie)
-    private void onMovieClick() {
-        iMovieAdapter.onMovieClicked();
+    public void onMovieClick() {
+        iMovieAdapter.onAdapterMovieClicked();
     }
 }
