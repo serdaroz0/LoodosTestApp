@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.ui.main;
+package serdar.oz.loodostestapp.ui.main.adapter;
 
 import android.view.View;
 

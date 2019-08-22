@@ -1,5 +1,6 @@
 package serdar.oz.loodostestapp.ui.detail;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -51,9 +52,8 @@ public class DetailPresenter implements DetailContract.Presenter {
                 detail = null;
                 if (response.isSuccessful())
                     detail = response.body();
-                Log.e(TAG, "onResponse: " + detail.getPoster());
                 if (detail != null && detail.getİmdbID() != null && !detail.getİmdbID().isEmpty())
-                    mView.loadPoster(detail.getPoster());
+                    mView.loadData(detail);
                 else
                     mView.loadPlaceholder();
                 ProgressUtil.hideProgress();
@@ -65,5 +65,10 @@ public class DetailPresenter implements DetailContract.Presenter {
                 ProgressUtil.hideProgress();
             }
         });
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        ((Activity) context).onBackPressed();
     }
 }

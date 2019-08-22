@@ -3,6 +3,7 @@ package serdar.oz.loodostestapp.util;
 import static serdar.oz.loodostestapp.constants.GlobalConstants.EMPTY;
 
 public class StringUtils {
+
     public static String checkNullOrNot(String text) {
         if (text == null)
             return null;

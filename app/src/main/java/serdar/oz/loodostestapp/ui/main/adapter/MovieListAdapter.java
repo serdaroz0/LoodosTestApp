@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.ui.main;
+package serdar.oz.loodostestapp.ui.main.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -48,7 +48,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     }
 
-    MovieListAdapter(Context context, List<MovieList.Type> movieList, IMovieAdapter iMovieAdapter) {
+    public MovieListAdapter(Context context, List<MovieList.Type> movieList, IMovieAdapter iMovieAdapter) {
         this.movieList = movieList;
         this.iMovieAdapter = iMovieAdapter;
         this.context = context;

@@ -30,5 +30,6 @@ public interface MainContract {
         void startDetailActivity(String imdbId, android.view.View view);
 
 
+
     }
 }

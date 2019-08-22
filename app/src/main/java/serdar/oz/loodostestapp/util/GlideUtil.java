@@ -13,8 +13,8 @@ public class GlideUtil {
         return new RequestOptions()
                 .placeholder(ProgressUtil.createCircularProgressDrawable(context))
                 .error(R.drawable.ic_poster_placeholder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .priority(Priority.HIGH);
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .priority(Priority.NORMAL);
     }
 
 

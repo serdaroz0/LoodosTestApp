@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,6 +21,9 @@ import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.ui.base.BaseActivity;
 import serdar.oz.loodostestapp.constants.GlobalConstants;
 import serdar.oz.loodostestapp.model.MovieList;
+import serdar.oz.loodostestapp.ui.main.adapter.IMovieAdapter;
+import serdar.oz.loodostestapp.ui.main.adapter.MovieListAdapter;
+import serdar.oz.loodostestapp.util.KeyboardUtil;
 import serdar.oz.loodostestapp.util.ProgressUtil;
 
 public class MainActivity extends BaseActivity implements MainContract.View, IMovieAdapter {
@@ -33,7 +37,13 @@ public class MainActivity extends BaseActivity implements MainContract.View, IMo
     private MainPresenter mainPresenter;
     private MovieListAdapter movieListAdapter;
     private List<MovieList.Type> movieList = new ArrayList<>();
-
+    private RecyclerView.OnScrollListener onScrollChangeListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            KeyboardUtil.hideKeyboard(MainActivity.this);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, IMo
         rvSearchItems.setItemAnimator(new DefaultItemAnimator());
         movieListAdapter = new MovieListAdapter(this, movieList, this);
         rvSearchItems.setAdapter(movieListAdapter); // set the Adapter to RecyclerView
+        rvSearchItems.addOnScrollListener(onScrollChangeListener);
     }
 
     @Override
@@ -112,5 +123,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, IMo
     @Override
     public void onMovieClicked(String imdbId, View view) {
         onMovieItemClicked(imdbId, view);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        rvSearchItems.removeOnScrollListener(onScrollChangeListener);
     }
 }
