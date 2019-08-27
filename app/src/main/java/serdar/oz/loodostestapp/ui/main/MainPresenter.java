@@ -13,9 +13,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import serdar.oz.loodostestapp.R;
 import serdar.oz.loodostestapp.constants.NetworkConstants;
-import serdar.oz.loodostestapp.model.MovieList;
-import serdar.oz.loodostestapp.services.RetrofitClient;
-import serdar.oz.loodostestapp.services.SearchApi;
+import serdar.oz.loodostestapp.apiresponses.trending.Trending;
+import serdar.oz.loodostestapp.network.MovieApi;
+import serdar.oz.loodostestapp.network.RetrofitClient;
 import serdar.oz.loodostestapp.ui.detail.DetailActivity;
 import serdar.oz.loodostestapp.util.ProgressUtil;
 
@@ -25,7 +25,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     private final MainContract.View mView;
     private final Context context;
-    private MovieList movieList;
+    private Trending trendList;
 
 
     MainPresenter(Context context, MainContract.View mView) {
@@ -41,19 +41,17 @@ public class MainPresenter implements MainContract.Presenter {
 
 
     @Override
-    public void getMovieListWithQuery(String query) {
+    public void getTrendList() {
         ProgressUtil.showProgress(context);
-        SearchApi searchApi = RetrofitClient.getApiClient().create(SearchApi.class);
-        Call<MovieList> call = searchApi.getMovieList(query, NetworkConstants.API_KEY);
-        call.enqueue(new Callback<MovieList>() {
+        MovieApi movieApi = RetrofitClient.getApiClient().create(MovieApi.class);
+        Call<Trending> call = movieApi.getTrendingList(NetworkConstants.MOVIE, NetworkConstants.WEEK, NetworkConstants.API_KEY);
+        call.enqueue(new Callback<Trending>() {
             @Override
-            public void onResponse(@NonNull Call<MovieList> call, @NonNull Response<MovieList> response) {
-                /*For every response we need to clear list first than add*/
-                movieList = null;
+            public void onResponse(@NonNull Call<Trending> call, @NonNull Response<Trending> response) {
                 if (response.isSuccessful())
-                    movieList = response.body();
-                if (movieList != null && movieList.getSearch() != null && movieList.getSearch().size() > 0) {
-                    mView.notifyMovieData(movieList);
+                    trendList = response.body();
+                if (trendList != null) {
+                    mView.notifyMovieData(trendList);
                     mView.showResultView();
                 } else
                     mView.noResultView();
@@ -61,7 +59,7 @@ public class MainPresenter implements MainContract.Presenter {
             }
 
             @Override
-            public void onFailure(@NonNull Call<MovieList> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Trending> call, @NonNull Throwable t) {
                 mView.showErrorMessage(t.getMessage());
                 mView.noResultView();
                 ProgressUtil.hideProgress();
@@ -71,9 +69,14 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void startDetailActivity(String imdbId, View view) {
+    public void loadMoreTrendingData() {
+
+    }
+
+    @Override
+    public void startDetailActivity(long mId, View view) {
         Intent i = new Intent(context, DetailActivity.class);
-        i.putExtra(IMDB_ID, imdbId);
+        i.putExtra(IMDB_ID, mId);
         String transitionName = context.getString(R.string.movie_poster);
         ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, view, transitionName);
         context.startActivity(i, transitionActivityOptions.toBundle());

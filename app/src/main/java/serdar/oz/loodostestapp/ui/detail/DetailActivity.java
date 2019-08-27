@@ -13,13 +13,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import serdar.oz.loodostestapp.R;
+import serdar.oz.loodostestapp.apiresponses.movieDetail.MovieDetail;
 import serdar.oz.loodostestapp.constants.GlobalConstants;
-import serdar.oz.loodostestapp.model.Detail;
+import serdar.oz.loodostestapp.constants.NetworkConstants;
 import serdar.oz.loodostestapp.util.GlideUtil;
 
 public class DetailActivity extends AppCompatActivity implements DetailContract.View {
+
     DetailPresenter detailPresenter;
-    String imdbId;
+    long imdbId;
     @BindView(R.id.ivPoster)
     ImageView ivPoster;
     @BindView(R.id.rbStar)
@@ -34,9 +36,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         if (getIntent() != null)
-            imdbId = getIntent().getStringExtra(GlobalConstants.IMDB_ID);
-        else
-            imdbId = null;
+            imdbId = getIntent().getLongExtra(GlobalConstants.IMDB_ID, 0);
         detailPresenter = new DetailPresenter(this, this, imdbId);
         detailPresenter.created();
     }
@@ -57,10 +57,10 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     }
 
     @Override
-    public void loadData(Detail detail) {
-        tvTitle.setText(detail.getTitle());
-        Glide.with(this).applyDefaultRequestOptions(GlideUtil.glideOptions(this)).load(detail.getPoster()).into(ivPoster);
-        rbStar.setRating(Float.parseFloat(detail.getİmdbRating()));
+    public void loadData(MovieDetail movieDetail) {
+        tvTitle.setText(movieDetail.getTitle());
+        Glide.with(this).applyDefaultRequestOptions(GlideUtil.glideOptions(this)).load(NetworkConstants.PHOTO_URL + movieDetail.getPosterPath()).into(ivPoster);
+        rbStar.setRating(movieDetail.getVoteAverage().floatValue());
     }
 
 

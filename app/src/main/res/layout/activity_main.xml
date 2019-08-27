@@ -10,14 +10,6 @@
     tools:context=".ui.main.MainActivity">
 
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/svSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_search_background"
-        app:iconifiedByDefault="false"
-        app:queryHint="@string/search_movies" />
-
     <LinearLayout
         android:id="@+id/llNoResult"
         android:layout_width="match_parent"
@@ -45,11 +37,25 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSearchItems"
+    <LinearLayout
+        android:id="@+id/llRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin">
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/svSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_search_background"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_movies" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin" />
+    </LinearLayout>
+
 </LinearLayout>

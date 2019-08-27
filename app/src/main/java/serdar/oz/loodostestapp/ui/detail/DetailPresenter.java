@@ -9,10 +9,10 @@ import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import serdar.oz.loodostestapp.apiresponses.movieDetail.MovieDetail;
 import serdar.oz.loodostestapp.constants.NetworkConstants;
-import serdar.oz.loodostestapp.model.Detail;
-import serdar.oz.loodostestapp.services.DetailApi;
-import serdar.oz.loodostestapp.services.RetrofitClient;
+import serdar.oz.loodostestapp.network.MovieApi;
+import serdar.oz.loodostestapp.network.RetrofitClient;
 import serdar.oz.loodostestapp.util.ProgressUtil;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -20,12 +20,12 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class DetailPresenter implements DetailContract.Presenter {
     private final DetailContract.View mView;
     private final Context context;
-    private Detail detail;
-    private String imdbId;
+    private MovieDetail movieDetail;
+    private long mId;
 
-    DetailPresenter(Context context, DetailContract.View mView, String imdbId) {
+    DetailPresenter(Context context, DetailContract.View mView, long mId) {
         this.mView = mView;
-        this.imdbId = imdbId;
+        this.mId = mId;
         this.context = context;
     }
 
@@ -33,7 +33,7 @@ public class DetailPresenter implements DetailContract.Presenter {
     @Override
     public void created() {
         mView.bindViews();
-        if (imdbId != null)
+        if (mId != 0)
             getPosterData();
         else
             mView.loadPlaceholder();
@@ -43,24 +43,24 @@ public class DetailPresenter implements DetailContract.Presenter {
     @Override
     public void getPosterData() {
         ProgressUtil.showProgress(context);
-        DetailApi detailApi = RetrofitClient.getApiClient().create(DetailApi.class);
-        Call<Detail> call = detailApi.getDetail(imdbId, NetworkConstants.API_KEY);
-        call.enqueue(new Callback<Detail>() {
+        MovieApi movieApi = RetrofitClient.getApiClient().create(MovieApi.class);
+        Call<MovieDetail> call = movieApi.getMovieDetail(mId, NetworkConstants.API_KEY);
+        call.enqueue(new Callback<MovieDetail>() {
             @Override
-            public void onResponse(@NonNull Call<Detail> call, @NonNull Response<Detail> response) {
+            public void onResponse(@NonNull Call<MovieDetail> call, @NonNull Response<MovieDetail> response) {
                 /*For every response we need to clear list first than add*/
-                detail = null;
+                movieDetail = null;
                 if (response.isSuccessful())
-                    detail = response.body();
-                if (detail != null && detail.getİmdbID() != null && !detail.getİmdbID().isEmpty())
-                    mView.loadData(detail);
+                    movieDetail = response.body();
+                if (movieDetail != null && movieDetail.getImdbId() != null && !movieDetail.getImdbId().isEmpty())
+                    mView.loadData(movieDetail);
                 else
                     mView.loadPlaceholder();
                 ProgressUtil.hideProgress();
             }
 
             @Override
-            public void onFailure(@NonNull Call<Detail> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<MovieDetail> call, @NonNull Throwable t) {
                 Log.e(TAG, "onFailureDetail: " + t.getMessage());
                 ProgressUtil.hideProgress();
             }

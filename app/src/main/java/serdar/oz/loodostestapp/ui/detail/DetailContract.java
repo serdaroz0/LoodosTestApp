@@ -1,6 +1,6 @@
 package serdar.oz.loodostestapp.ui.detail;
 
-import serdar.oz.loodostestapp.model.Detail;
+import serdar.oz.loodostestapp.apiresponses.movieDetail.MovieDetail;
 import serdar.oz.loodostestapp.ui.base.BasePresenter;
 import serdar.oz.loodostestapp.ui.base.BaseView;
 
@@ -15,7 +15,7 @@ public interface DetailContract {
 
         void onActivityDestroy();
 
-        void loadData(Detail detail);
+        void loadData(MovieDetail movieDetail);
 
         void loadPlaceholder();
 

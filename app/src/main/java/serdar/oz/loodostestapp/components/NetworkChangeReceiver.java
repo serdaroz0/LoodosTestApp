@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.control;
+package serdar.oz.loodostestapp.components;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;

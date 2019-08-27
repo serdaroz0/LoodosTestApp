@@ -18,13 +18,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
-import serdar.oz.loodostestapp.model.MovieList;
+import serdar.oz.loodostestapp.apiresponses.trending.TrendDetail;
+import serdar.oz.loodostestapp.constants.NetworkConstants;
 import serdar.oz.loodostestapp.util.GlideUtil;
 
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
     private final Context context;
-    private final List<MovieList.Type> movieList;
+    private final List<TrendDetail> trendingList;
     private final IMovieAdapter iMovieAdapter;
 
 
@@ -39,7 +40,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         TextView tvYear;
         @BindView(R.id.cvMovie)
         CardView cvMovie;
-
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -48,8 +48,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     }
 
-    public MovieListAdapter(Context context, List<MovieList.Type> movieList, IMovieAdapter iMovieAdapter) {
-        this.movieList = movieList;
+    public MovieListAdapter(Context context, List<TrendDetail> trendingList, IMovieAdapter iMovieAdapter) {
+        this.trendingList = trendingList;
         this.iMovieAdapter = iMovieAdapter;
         this.context = context;
     }
@@ -62,14 +62,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        MovieList.Type movie = movieList.get(position);
+        TrendDetail trend = trendingList.get(position);
         try {
-            if (movie.getPoster() != null && !movie.getPoster().isEmpty())
-                Glide.with(context).applyDefaultRequestOptions(GlideUtil.glideOptions(context)).load(movie.getPoster()).into(holder.ivPoster);
-            holder.tvTitle.setText(movie.getTitle());
-            holder.tvType.setText(movie.getYear());
-            holder.tvYear.setText(movie.getType().toUpperCase());
-            holder.cvMovie.setOnClickListener(view -> iMovieAdapter.onMovieClicked(movieList.get(position).getİmdbID(), holder.ivPoster));
+            if (trend.getmPosterPath() != null && !trend.getmPosterPath().isEmpty())
+                Glide.with(context).applyDefaultRequestOptions(GlideUtil.glideOptions(context)).load(NetworkConstants.PHOTO_URL + trend.getmPosterPath()).into(holder.ivPoster);
+            holder.tvTitle.setText(trend.getmTitle());
+            holder.tvType.setText(trend.getmOverview());
+            holder.tvYear.setText(trend.getmOriginalLanguage().toUpperCase());
+             holder.cvMovie.setOnClickListener(view -> iMovieAdapter.onMovieClicked(trend.getmId(), holder.ivPoster));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -77,7 +77,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public int getItemCount() {
-        return (movieList == null) ? 0 : movieList.size();
+        return (trendingList == null) ? 0 : trendingList.size();
     }
-
 }

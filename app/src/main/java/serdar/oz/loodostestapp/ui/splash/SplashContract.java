@@ -3,9 +3,9 @@ package serdar.oz.loodostestapp.ui.splash;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 
+import serdar.oz.loodostestapp.components.NetworkChangeReceiver;
 import serdar.oz.loodostestapp.ui.base.BasePresenter;
 import serdar.oz.loodostestapp.ui.base.BaseView;
-import serdar.oz.loodostestapp.control.NetworkChangeReceiver;
 
 
 public interface SplashContract {

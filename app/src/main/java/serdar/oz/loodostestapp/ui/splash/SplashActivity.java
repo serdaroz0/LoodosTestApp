@@ -11,9 +11,9 @@ import com.daimajia.androidanimations.library.YoYo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
+import serdar.oz.loodostestapp.components.NetworkChangeReceiver;
+import serdar.oz.loodostestapp.components.TypeWriter;
 import serdar.oz.loodostestapp.ui.base.BaseActivity;
-import serdar.oz.loodostestapp.control.NetworkChangeReceiver;
-import serdar.oz.loodostestapp.control.TypeWriter;
 
 import static android.content.ContentValues.TAG;
 import static serdar.oz.loodostestapp.constants.GlobalConstants.SPLASH_DELAY;
@@ -23,7 +23,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     ImageView ivSplashIcon;
     @BindView(R.id.tvSplashText)
     TypeWriter tvSplashText;
-    private SplashPresenter mSplashPresenter;
+    private SplashPresenter mPresenter;
     private NetworkChangeReceiver mNetworkChangeReceiver;
     private Animator.AnimatorListener animatorListener;
 
@@ -31,9 +31,9 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mSplashPresenter = new SplashPresenter(this, this);
-        mSplashPresenter.created();
-        mNetworkChangeReceiver = mSplashPresenter.registerReceiver(this, mSplashPresenter.checkNetworkState());
+        mPresenter = new SplashPresenter(this, this);
+        mPresenter.created();
+        mNetworkChangeReceiver = mPresenter.registerReceiver(this, mPresenter.checkNetworkState());
     }
 
 
@@ -55,7 +55,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void onSplashAnimationEnd() {
-        mSplashPresenter.startMainActivity();
+        mPresenter.startMainActivity();
     }
 
     @Override
@@ -91,25 +91,24 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void onActivityPause() {
-        mSplashPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
+        mPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
     }
 
     @Override
     public void onActivityDestroy() {
-        mSplashPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
+        mPresenter.unregisterReceiver(this, mNetworkChangeReceiver);
     }
 
     @Override
     public void setSplashTextAndStartAnimation(String string) {
-        //Add a character every 150ms
-        tvSplashText.setText(string);
-        tvSplashText.setCharacterDelay(200);
-        tvSplashText.animateText(string);
-        YoYo.with(Techniques.FadeIn)
-                .duration(SPLASH_DELAY)
-                .withListener(animatorListener)
-                .playOn(ivSplashIcon);
-
+            //Add a character every 200ms
+            tvSplashText.setText(string);
+            tvSplashText.setCharacterDelay(200);
+            tvSplashText.animateText(string);
+            YoYo.with(Techniques.FadeIn)
+                    .duration(SPLASH_DELAY)
+                    .withListener(animatorListener)
+                    .playOn(ivSplashIcon);
     }
 
 

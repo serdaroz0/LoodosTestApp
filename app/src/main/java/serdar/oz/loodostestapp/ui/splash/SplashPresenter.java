@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import serdar.oz.loodostestapp.R;
-import serdar.oz.loodostestapp.control.NetworkChangeReceiver;
+import serdar.oz.loodostestapp.components.NetworkChangeReceiver;
 import serdar.oz.loodostestapp.ui.main.MainActivity;
 
 import static android.content.ContentValues.TAG;
@@ -44,7 +44,7 @@ public class SplashPresenter implements SplashContract.Presenter {
         map.put(SPLASH_TEXT, context.getString(R.string.splash_text));
         mFirebaseRemoteConfig.setConfigSettingsAsync(new FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(CACHE_EXPIRATION).build());
         mFirebaseRemoteConfig.setDefaults(R.xml.default_splash);
-        mFirebaseRemoteConfig.setDefaults(map);
+        mFirebaseRemoteConfig.setDefaultsAsync(map);
         String splashText = mFirebaseRemoteConfig.getString(SPLASH_TEXT);
         /*Set Splash text here*/
         mView.setSplashTextAndStartAnimation(splashText);

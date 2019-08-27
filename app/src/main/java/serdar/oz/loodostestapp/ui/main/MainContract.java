@@ -1,6 +1,6 @@
 package serdar.oz.loodostestapp.ui.main;
 
-import serdar.oz.loodostestapp.model.MovieList;
+import serdar.oz.loodostestapp.apiresponses.trending.Trending;
 import serdar.oz.loodostestapp.ui.base.BasePresenter;
 import serdar.oz.loodostestapp.ui.base.BaseView;
 
@@ -17,18 +17,20 @@ public interface MainContract {
 
         void showResultView();
 
-        void notifyMovieData(MovieList movieList);
+        void notifyMovieData(Trending trendingList);
 
-        void onMovieItemClicked(String imdbId, android.view.View view);
+        void onMovieItemClicked(long mId, android.view.View view);
+
 
     }
 
     interface Presenter extends BasePresenter {
 
-        void getMovieListWithQuery(String query);
+        void getTrendList();
 
-        void startDetailActivity(String imdbId, android.view.View view);
+        void startDetailActivity(long mId, android.view.View view);
 
+        void loadMoreTrendingData();
 
 
     }

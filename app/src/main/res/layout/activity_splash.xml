@@ -16,7 +16,7 @@
         android:src="@drawable/ic_splash_icon" />
 
 
-    <serdar.oz.loodostestapp.control.TypeWriter
+    <serdar.oz.loodostestapp.components.TypeWriter
         android:id="@+id/tvSplashText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

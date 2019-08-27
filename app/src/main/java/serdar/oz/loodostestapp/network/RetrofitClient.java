@@ -1,4 +1,4 @@
-package serdar.oz.loodostestapp.services;
+package serdar.oz.loodostestapp.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

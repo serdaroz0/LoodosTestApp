@@ -1,9 +1,9 @@
 package serdar.oz.loodostestapp.ui.main;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,13 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import serdar.oz.loodostestapp.R;
-import serdar.oz.loodostestapp.ui.base.BaseActivity;
 import serdar.oz.loodostestapp.constants.GlobalConstants;
-import serdar.oz.loodostestapp.model.MovieList;
+import serdar.oz.loodostestapp.apiresponses.trending.TrendDetail;
+import serdar.oz.loodostestapp.apiresponses.trending.Trending;
+import serdar.oz.loodostestapp.ui.base.BaseActivity;
 import serdar.oz.loodostestapp.ui.main.adapter.IMovieAdapter;
 import serdar.oz.loodostestapp.ui.main.adapter.MovieListAdapter;
-import serdar.oz.loodostestapp.util.KeyboardUtil;
-import serdar.oz.loodostestapp.util.ProgressUtil;
 
 public class MainActivity extends BaseActivity implements MainContract.View, IMovieAdapter {
     private static final String TAG = "MainActivity";
@@ -34,14 +33,18 @@ public class MainActivity extends BaseActivity implements MainContract.View, IMo
     RecyclerView rvSearchItems;
     @BindView(R.id.llNoResult)
     LinearLayout llNoResult;
-    private MainPresenter mainPresenter;
+    @BindView(R.id.llRecycler)
+    LinearLayout llRecycler;
+    private MainPresenter mPresenter;
     private MovieListAdapter movieListAdapter;
-    private List<MovieList.Type> movieList = new ArrayList<>();
+    private List<TrendDetail> trendingList = new ArrayList<>();
     private RecyclerView.OnScrollListener onScrollChangeListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            KeyboardUtil.hideKeyboard(MainActivity.this);
+            if (!recyclerView.canScrollVertically(1)) {
+                mPresenter.loadMoreTrendingData();
+            }
         }
     };
 
@@ -49,17 +52,20 @@ public class MainActivity extends BaseActivity implements MainContract.View, IMo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mainPresenter = new MainPresenter(this, this);
-        mainPresenter.created();
-        /*Service response is coming very fast, I open showProgress() method so we can see the progress design.*/
-        ProgressUtil.showProgress(MainActivity.this);
-        new Handler().postDelayed(ProgressUtil::hideProgress, 1200);
+        mPresenter = new MainPresenter(this, this);
+        mPresenter.created();
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GlobalConstants.GRID_SPAN_COUNT, RecyclerView.VERTICAL, false);
         rvSearchItems.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
         rvSearchItems.setItemAnimator(new DefaultItemAnimator());
-        movieListAdapter = new MovieListAdapter(this, movieList, this);
+        mPresenter.getTrendList();
+        movieListAdapter = new MovieListAdapter(this, trendingList, this);
         rvSearchItems.setAdapter(movieListAdapter); // set the Adapter to RecyclerView
         rvSearchItems.addOnScrollListener(onScrollChangeListener);
+        View v = llRecycler.getChildAt(llRecycler.getChildCount() - 1);
+        ProgressBar progressBar = new ProgressBar(this);
+        if (v != progressBar)
+            llRecycler.addView(progressBar);
     }
 
     @Override
@@ -85,10 +91,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, IMo
             @Override
             public boolean onQueryTextSubmit(String query) {
                 /*If the limit is less than 2 character, an error message is return because a lot of results are returned than api*/
-                if (query.length() > GlobalConstants.QUERY_MIN_LIMIT)
-                    mainPresenter.getMovieListWithQuery(query);
-                else
-                    noResultView();
+                //mPresenter.onQueryChanged(query);
                 return false;
             }
 
@@ -106,23 +109,21 @@ public class MainActivity extends BaseActivity implements MainContract.View, IMo
         rvSearchItems.setVisibility(View.VISIBLE);
     }
 
-
     @Override
-    public void notifyMovieData(MovieList movieModel) {
-        movieList.clear();
-        movieList.addAll(movieModel.getSearch());
+    public void notifyMovieData(Trending trending) {
+        trendingList.addAll(trending.getmTrendDetails());
         movieListAdapter.notifyDataSetChanged();
     }
 
+
     @Override
-    public void onMovieItemClicked(String imdbId, View view) {
-        mainPresenter.startDetailActivity(imdbId, view);
+    public void onMovieItemClicked(long mId, View view) {
+        mPresenter.startDetailActivity(mId, view);
     }
 
-
     @Override
-    public void onMovieClicked(String imdbId, View view) {
-        onMovieItemClicked(imdbId, view);
+    public void onMovieClicked(long mId , View view) {
+        onMovieItemClicked(mId, view);
     }
 
     @Override

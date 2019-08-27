@@ -4,5 +4,5 @@ import android.view.View;
 
 public interface IMovieAdapter {
 
-    void onMovieClicked(String imdbId, View view);
+    void onMovieClicked(long mId, View view);
 }
