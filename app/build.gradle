@@ -7,7 +7,7 @@ android {
     def gitCommitCount = "git rev-list HEAD --count".execute().text.trim()
 
     defaultConfig {
-        applicationId "serdar.oz.loodostestapp"
+        applicationId "serdar.oz.movieapp"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1

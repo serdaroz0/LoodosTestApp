@@ -43,13 +43,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/svSearch"
+        <TextView
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/main_search_background"
-            app:iconifiedByDefault="false"
-            app:queryHint="@string/search_movies" />
+            android:text="@string/trending_title"
+            android:textSize="@dimen/font_size_3x"
+            android:gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearchItems"

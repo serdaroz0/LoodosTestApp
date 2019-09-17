@@ -26,7 +26,7 @@
 -keep class com.google.code.gson.** { *; }
 
 #Model File
--keep class serdar.oz.loodostestapp.model.** { *; }
+-keep class serdar.oz.movieapp.apiresponses.** { *; }
 
 
 
